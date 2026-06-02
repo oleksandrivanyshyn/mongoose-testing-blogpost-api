@@ -8,6 +8,6 @@ describe('Reading users out of the database', () => {
         joe.save().then(() => {done()});
     })
     it('finds all users with a name of joe', () => {
-        User.find({ name: 'Joe' }).then((users) => {})
+        User.find({ name: 'Joe' }).then((users) => {console.log(users); done();});
     });
 });
