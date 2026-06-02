@@ -14,7 +14,12 @@ before((done) => {
 });
 
 beforeEach((done) => {
-  mongoose.connection.collections.users.drop().then(() => {
-    done();
-  });
+  mongoose.connection.collections.users
+    .drop()
+    .then(() => {
+      done();
+    })
+    .catch((err) => {
+      done();
+    });
 });

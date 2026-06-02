@@ -9,15 +9,6 @@ describe('Deleting a user', () => {
     joe.save().then(() => done());
   });
 
-  it('model instance remove', (done) => {
-    User.deleteMany({ name: 'Joe' })
-      .then(() => User.findOne({ name: 'Joe' }))
-      .then((user) => {
-        assert(user === null);
-        done();
-      });
-  });
-
   it('class method remove', (done) => {
     User.deleteMany({ name: 'Joe' })
       .then(() => User.findOne({ name: 'Joe' }))
@@ -28,7 +19,7 @@ describe('Deleting a user', () => {
   });
 
   it('class method findOneAndRemove', (done) => {
-    User.findOneAndRemove({ name: 'Joe' })
+    User.findOneAndDelete({ name: 'Joe' })
       .then(() => User.findOne({ name: 'Joe' }))
       .then((user) => {
         assert(user === null);
@@ -37,7 +28,7 @@ describe('Deleting a user', () => {
   });
 
   it('class method findByIdAndRemove', (done) => {
-    User.findByIdAndRemove(joe._id)
+    User.findByIdAndDelete(joe._id)
       .then(() => User.findOne({ name: 'Joe' }))
       .then((user) => {
         assert(user === null);
