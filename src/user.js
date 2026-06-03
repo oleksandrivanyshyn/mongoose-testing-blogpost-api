@@ -19,11 +19,13 @@ UserSchema.virtual('postCount').get(function () {
   return this.posts.length;
 });
 
-UserSchema.pre('remove', function (next) {
+UserSchema.pre('deleteOne', { document: true, query: false }, function (next) {
   const BlogPost = mongoose.model('blogPost');
-  BlogPost.deleteMany({ _id: { $in: this.blogPosts } }).then(() => next());
-});
 
+  BlogPost.deleteMany({ _id: { $in: this.blogPosts } })
+    .then(() => next())
+    .catch((err) => next(err));
+});
 const User = mongoose.model('user', UserSchema);
 
 module.exports = User;
