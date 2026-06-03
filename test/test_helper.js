@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
+const mongoUri = 'mongodb://127.0.0.1:27017/users_test';
 
 before((done) => {
-  mongoose.connect('mongodb://localhost/users_test');
+  mongoose.connect(mongoUri);
   mongoose.connection
     .once('open', () => {
       done();
@@ -14,12 +14,14 @@ before((done) => {
 });
 
 beforeEach((done) => {
-  mongoose.connection.collections.users
+  const { users, comments, blogposts } = mongoose.connection.collections;
+
+  users
     .drop()
-    .then(() => {
-      done();
-    })
-    .catch((err) => {
-      done();
-    });
+    .catch(() => {})
+    .then(() => comments.drop())
+    .catch(() => {})
+    .then(() => blogposts.drop())
+    .catch(() => {})
+    .then(() => done());
 });
